@@ -6,7 +6,7 @@
 #    By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 11:31:20 by cgoldens          #+#    #+#              #
-#    Updated: 2024/10/28 14:51:31 by cgoldens         ###   ########.fr        #
+#    Updated: 2024/10/28 14:58:04 by cgoldens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 LIBFT_PATH = libft/
 
 LIBFT_LIB = $(LIBFT_PATH)libft.a
+
 
 SRC = so_long.c
 
