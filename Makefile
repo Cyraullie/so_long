@@ -6,37 +6,52 @@
 #    By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 11:31:20 by cgoldens          #+#    #+#              #
-#    Updated: 2024/10/28 14:44:15 by cgoldens         ###   ########.fr        #
+#    Updated: 2024/10/28 14:51:31 by cgoldens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = so_long
+
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I
-INCLUDES	=	./
-LIB		=	minilibx
+
+CFLAGS = -Wall -Wextra -Werror -g
+
+MLX_PATH = mlx/
+
+MLX_LIB = $(MLX_PATH)libmlx.a
+
+MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+
+LIBFT_PATH = libft/
+
+LIBFT_LIB = $(LIBFT_PATH)libft.a
+
 SRC = so_long.c
+
 OBJ = $(SRC:.c=.o)
-NAME = so_long.a
+
 # Règles
-all: $(NAME)
+all: subsystems $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CC) $(CFLAGS) -Imlx -c -o $@ $<
+
+subsystems:
+	@make -C $(MLX_PATH) all
+	@make -C $(LIBFT_PATH) all
 
 $(NAME): $(OBJ)
-	@make -C $(LIB)
-	@cp $(LIB)/libmlx.a .
-	@mv	libmlx.a $(NAME)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJ) $(MLX_LIB) $(LIBFT_LIB) -o $(NAME)
 
 clean:
+	make -C $(MLX_PATH) clean
+	make -C $(LIBFT_PATH) clean
 	rm -f $(OBJ)
-	@make clean -C $(LIB)
 
 fclean: clean
+	make -C $(MLX_PATH) fclean
+	make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME)
-	rm -f $(LIB)/libmlx.a
 
 re: fclean all
 
