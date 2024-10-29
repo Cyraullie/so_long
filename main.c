@@ -20,59 +20,119 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	main(void)
+void    create_window(char *buffer)
 {
     void *mlx;
     void *win;
+    int x;
+    int y;
+    int i;
+
+    y = 0;
+    x = 0;
+    i = 0;
+    mlx = mlx_init();
+    if (mlx == NULL)
+        return (1);
+    while (buffer[i] != '\0')
+    {
+        if (buffer[i] == '\n')
+            y++;
+        i++;
+    }
+    i--;
+    printf("%d\n", y);
+    printf("%d", i / y);
+    x = i / y;
+
+    win = mlx_new_window(mlx, x * IMG_S, y * IMG_S, "Image agrandie");
+    mlx_loop(mlx);
+}
+
+
+int	main(void)
+{
+	int		fd1;
+	char	*buffer;
+
+    buffer = NULL;
+	fd1 = open("maps/map1.ber", O_RDONLY);
+	buffer = read_map(fd1, buffer);
+    printf("%s", buffer);
+    create_window(buffer);
+
+/*
+    void *mlx;
+    void *win;
     void *img;
+    void *scaled_img;
     int img_width, img_height;
-    int x, y;
-    int *data;
+    int new_width, new_height;
+    int *data, *scaled_data;
     int bpp, size_line, endian;
-    
+    int scaled_bpp, scaled_size_line, scaled_endian;
+
     // Initialisation de la connexion à MiniLibX
     mlx = mlx_init();
     if (mlx == NULL)
         return (1);
     
     // Chargement de l'image .xpm
-    img = mlx_xpm_file_to_image(mlx, "./textures/player.xpm", &img_width, &img_height);
+    img = mlx_xpm_file_to_image(mlx, "textures/player.xpm", &img_width, &img_height);
     if (img == NULL)
         return (1);
 
-    // Création d'une fenêtre qui s'adapte à la taille agrandie de l'image
-    win = mlx_new_window(mlx, img_width * SCALE_FACTOR, img_height * SCALE_FACTOR, "Image agrandie");
-    if (win == NULL)
+    // Dimensions de la nouvelle image
+    new_width = img_width * SCALE_FACTOR;
+    new_height = img_height * SCALE_FACTOR;
+
+    // Création d'une nouvelle image agrandie
+    scaled_img = mlx_new_image(mlx, new_width, new_height);
+    if (scaled_img == NULL)
         return (1);
 
-    // Obtenir l'adresse de la mémoire de l'image
+    // Récupération des données de l'image originale
     data = (int *)mlx_get_data_addr(img, &bpp, &size_line, &endian);
+    scaled_data = (int *)mlx_get_data_addr(scaled_img, &scaled_bpp, &scaled_size_line, &scaled_endian);
 
-    // Agrandissement : Redessin de chaque pixel
-    for (y = 0; y < img_height; y++)
+    // Redimensionnement de l'image en copiant chaque pixel avec agrandissement
+    for (int y = 0; y < img_height; y++)
     {
-        for (x = 0; x < img_width; x++)
+        for (int x = 0; x < img_width; x++)
         {
-            int color = data[y * (size_line / 4) + x];  // Couleur du pixel (x, y)
+            int color = data[y * (size_line / 4) + x];
 
-            // Dessine un "bloc" de pixels pour agrandir
+            // Copier le pixel dans une zone agrandie de la nouvelle image
             for (int dy = 0; dy < SCALE_FACTOR; dy++)
             {
                 for (int dx = 0; dx < SCALE_FACTOR; dx++)
                 {
-                    mlx_pixel_put(mlx, win, x * SCALE_FACTOR + dx, y * SCALE_FACTOR + dy, color);
+                    int scaled_x = x * SCALE_FACTOR + dx;
+                    int scaled_y = y * SCALE_FACTOR + dy;
+                    scaled_data[scaled_y * (scaled_size_line / 4) + scaled_x] = color;
                 }
             }
         }
     }
+
+    // Création de la fenêtre pour afficher l'image agrandie
+    win = mlx_new_window(mlx, 900, 600, "Image agrandie");
+    if (win == NULL)
+        return (1);
+
+    // Affichage de l'image agrandie dans la fenêtre
+    mlx_put_image_to_window(mlx, win, scaled_img, 0, 0);
 
     // Boucle pour garder la fenêtre ouverte
     mlx_loop(mlx);
 
     // Libération des ressources
     mlx_destroy_image(mlx, img);
+    mlx_destroy_image(mlx, scaled_img);
     mlx_destroy_window(mlx, win);
     return (0);
+
+*/
 
 	/*void	*mlx;
 	void	*mlx_win;

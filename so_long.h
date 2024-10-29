@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/28 16:28:13 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:09:58 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "libft/libft.h"
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/uio.h>
 
-# define IMG_W 32
-# define IMG_H 32
+# define IMG_S 64
 # define ESC 53
 # define W 13
 # define A 0
@@ -29,7 +32,8 @@
 # define DOWN 1
 # define LEFT -1
 # define RIGHT 1
-#define SCALE_FACTOR 2
+# define SCALE_FACTOR 4
+# define BUFFER_SIZE 4200
 
 typedef struct	s_data {
 	void	*img;
@@ -38,5 +42,8 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 }				t_data;
+
+char	*ft_free(char *buffer, char *buf);
+char	*read_map(int fd, char *res);
 
 #endif
