@@ -121,7 +121,7 @@ char **convert_buffer_to_map(char *buffer, int *rows, int *cols)
 
 int	main(void)
 {
-	void    *mlx;
+	//void    *mlx;
 	int		fd;
 	char	*buffer;
 	int y;
@@ -129,9 +129,9 @@ int	main(void)
     int rows, cols;
     char **map;
 
-	mlx = mlx_init();
+	/*mlx = mlx_init();
 	if (mlx == NULL)
-		return (1);
+		return (1);*/
 	buffer = NULL;
 	fd = open("maps/map2.ber", O_RDONLY);
 	if (fd < 0)
@@ -140,8 +140,6 @@ int	main(void)
 	i = 0;
 	buffer = read_map(fd, buffer);
 	close(fd);
-	if (check_map(buffer))
-		return (1);
     if (!buffer)
         return (1);
 	while (buffer[i] != '\0')
@@ -150,14 +148,15 @@ int	main(void)
 			y++;
 		i++;
 	}
+	i--;
 	map = convert_buffer_to_map(buffer, &rows, &cols);
     free(buffer);
-	i--;
+	check_map(map, rows, cols);
 
-	add_floor(mlx, y * IMG_S, (i / y) * IMG_S, map, rows, cols);
+	//add_floor(mlx, y * IMG_S, (i / y) * IMG_S, map, rows, cols);
 
 	for (int i = 0; i < rows; i++)
 		free(map[i]);
 	free(map);
-	mlx_loop(mlx);
+	//mlx_loop(mlx);
 }

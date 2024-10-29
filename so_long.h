@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/29 16:01:12 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:20:59 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ typedef struct	s_data {
 
 char	*ft_free(char *buffer, char *buf);
 char	*read_map(int fd, char *res);
-int		check_map(char *buffer);
+int		check_map(char **map,int rows, int cols);
 
 #endif
