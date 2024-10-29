@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:32 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/29 12:10:24 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:05:58 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,14 @@ char	*read_map(int fd, char *res)
 	return (res);
 }
 
+int	check_map(char *buffer)
+{
+	//TODO 1 exit
+	//TODO 1 collectible
+	//TODO 1 starting position
+	//TODO rectangular
+	//TODO surrounded by walls
+	buffer = NULL;
+	ft_putstr_fd("Error\n", 1);
+	return (1);
+}

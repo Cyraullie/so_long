@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:03:51 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/09 11:14:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:11:37 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdio.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
 # include <stdlib.h>
 
 typedef struct s_list
@@ -71,4 +73,14 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+int		ft_printf(const char *format, ...);
+int		ft_formats(va_list args, const char format);
+int		ft_printchar(int c);
+int		ft_printstr(char *s);
+int		ft_printnbr(int n);
+int		ft_printpercent(void);
+int		ft_printhex(unsigned	int n, const	char f);
+int		ft_printptr(unsigned	long long ptr);
+int		ft_printunsigned(unsigned	int n);
 #endif
