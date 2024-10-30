@@ -133,7 +133,7 @@ int	main(void)
 	if (mlx == NULL)
 		return (1);*/
 	buffer = NULL;
-	fd = open("maps/map2.ber", O_RDONLY);
+	fd = open("maps/map1.ber", O_RDONLY);
 	if (fd < 0)
 		return (1);
 	y = 0;

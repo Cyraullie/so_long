@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:32 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/29 16:42:02 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:28:58 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,48 +40,106 @@ char	*read_map(int fd, char *res)
 	return (res);
 }
 
-int	check_map(char **map,int rows, int cols)
+int	check_map(char **map, int rows, int cols)
 {
 	//TODO 1 exit
 	//TODO 1 collectible
 	//TODO 1 starting position
 	//TODO rectangular
 	//TODO surrounded by walls = {row 0 and last full 1 && col 0 and last full 1}
+
+
+	if (!check_wall(map, rows, cols))
+	{
+		ft_printf("Error\nThe integrity of the wall is not respected\n");
+		return (0);
+	}
+	else if (!check_item(map, rows, cols))
+		return (0);
+
+	//printf("%d-", rows);
+	//printf("%d\n", cols);
+
+	/*printf("\ne=%d", check[0]);
+	printf("c=%d", check[1]);
+	printf("p=%d", check[2]);
+
+
+
+	ft_putstr_fd("Error\n", 1);*/
+	return (1);
+}
+
+int	check_item(char **map, int rows, int cols)
+{
 	int	x;
 	int	y;
-	int e;
-	int	c;
-	int p;
+	int	check[3];
+	int	i;
 
-	e = 0;
-	c = 0;
-	p = 0;
+	i = 0;
+	while (i < 3)
+	{
+		check[i] = 0;
+		i++;
+	}
 	x = 0;
 	y = 0;
-printf("%c", map[y][x]);
-	printf("%d-", rows);
-	printf("%d\n", cols);
-	while (x <= cols && y <= rows)
+	while (x != cols && y != rows)
 	{
-		printf("%d ", x);
 		if (map[y][x] == 'E')
-			e++;
+			check[0]++;
 		if (map[y][x] == 'C')
-			c++;
+			check[1]++;
 		if (map[y][x] == 'P')
-			p++;
-		if (x == cols)
+			check[2]++;
+		if (x == cols - 1)
 		{
-			if (x == cols && y == rows)
-				break;
 			y++;
 			x = -1;
 		}
 		x++;
 	}
+	if (check[0] > 1 || check[0] < 1)
+	{
+		ft_printf("Error\nThere's too much exit available\n");
+		return (0);
+	}
+	if (check[1] < 1)
+	{
+		ft_printf("Error\nThere must be at least 1 collectible\n");
+		return (0);
+	}
+	if (check[2] > 1 || check[2] < 1)
+	{
+		ft_printf("Error\nToo many appearance points for the player\n");
+		return (0);
+	}
+	return (1);
+}
 
+int	check_wall(char **map, int rows, int cols)
+{
+	int	x;
+	int	y;
+	int	er;
 
-
-	ft_putstr_fd("Error\n", 1);
+	x = 0;
+	y = 0;
+	er = 0;
+	while (x != cols)
+	{
+		if (map[0][x] != '1' || map[rows - 1][x] != '1')
+			er++;
+		x++;
+	}
+	while (y != rows)
+	{
+		if (map[y][0] != '1' || map[y][cols - 1] != '1')
+			er++;
+		y++;
+	}
+	if (er > 0)
+		return (0);
 	return (1);
 }
