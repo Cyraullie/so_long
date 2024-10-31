@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:32 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/31 16:19:11 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:39:15 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,9 @@ int	handle_error_map(char *map, int rows, int cols)
 
 	if (!check_map(map, rows, cols))
 		return (print_error("Error\nThe map aren't a rectangle\n", 0));
-	/*if (!check_wall(map, rows, cols))
-	{
-		ft_printf("Error\nThe integrity of the wall is not respected\n");
-		return (0);
-	}
-	i = check_item(map, rows, cols);
+	if (!check_wall(map, rows, cols))
+		return (print_error("Error\nThe integrity of the wall is not respected\n", 0));
+	/*i = check_item(map, rows, cols);
 	if (i == 1)
 	{
 		ft_printf("Error\nThere's too much exit available or too many appearance points for the player\n");
@@ -105,25 +102,25 @@ int	check_wall(char *map, int rows, int cols)
 {
 	int	x;
 	int	y;
-	int	er;
+	int	i;
 
+	i = 0;
 	x = 0;
 	y = 0;
-	er = 0;
-	while (x != cols)
+	while (i != (int)ft_strlen(map))
 	{
-		if (map[0][x] != '1' || map[rows - 1][x] != '1')
-			er++;
-		x++;
+		if ((((y == 0 || y == rows) && x < cols) && map[i] != '1')
+			|| ((x == 0 || x == cols - 1) && map[i] != '1'))
+			return (0);
+		if (map[i] == '\n')
+		{
+			x = 0;
+			y++;
+		}
+		else
+			x++;
+		i++;
 	}
-	while (y != rows)
-	{
-		if (map[y][0] != '1' || map[y][cols - 1] != '1')
-			er++;
-		y++;
-	}
-	if (er > 0)
-		return (0);
 	return (1);
 }
 
