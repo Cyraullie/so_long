@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/31 16:06:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:16:52 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,10 @@ char	*read_map(int fd, char *res)
 	}
 	free(buffer);
 	return (res);
+}
+
+int	print_error(char *text, int	status)
+{
+	ft_printf("%s", text);
+	return (status);
 }

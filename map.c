@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:32 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/31 16:14:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:19:11 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,8 @@ int	handle_error_map(char *map, int rows, int cols)
 	//TODO surrounded by walls = {row 0 and last full 1 && col 0 and last full 1}
 	//int	i;
 
-	
-
 	if (!check_map(map, rows, cols))
-	{
-		ft_printf("Error\nThe map aren't a rectangle\n");
-		return (0);
-	}
+		return (print_error("Error\nThe map aren't a rectangle\n", 0));
 	/*if (!check_wall(map, rows, cols))
 	{
 		ft_printf("Error\nThe integrity of the wall is not respected\n");
@@ -106,7 +101,7 @@ int	check_item(char **map, int rows, int cols)
 	return (0);
 }
 
-int	check_wall(char **map, int rows, int cols)
+int	check_wall(char *map, int rows, int cols)
 {
 	int	x;
 	int	y;
@@ -137,13 +132,11 @@ int	check_map(char *map, int rows, int cols)
 	int	i;
 	int	x;
 	int	y;
-	int	l;
 
 	i = 0;
 	y = 0;
 	x = 0;
-	l = ft_strlen(map);
-	while (i != l)
+	while (i != (int)ft_strlen(map))
 	{	
 		if (map[i] == '\n')
 		{

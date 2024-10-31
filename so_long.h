@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/31 12:16:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:17:10 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-char	*ft_free(char *buffer, char *buf);
-char	*read_map(int fd, char *res);
 int		get_map_data(char *map);
-int	handle_error_map(char *map, int rows, int cols);
+int		handle_error_map(char *map, int rows, int cols);
 //int		check_wall(char **map, int rows, int cols);
 //int		check_item(char **map, int rows, int cols);
 int		check_map(char *map, int rows, int cols);
+
+int		print_error(char *text, int	status);
+char	*ft_free(char *buffer, char *buf);
+char	*read_map(int fd, char *res);
 
 #endif
