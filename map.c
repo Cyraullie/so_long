@@ -6,67 +6,73 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:32 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/30 13:28:58 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:14:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*read_map(int fd, char *res)
+int	get_map_data(char *map)
 {
-	char	*buffer;
-	int		byte_read;
+	int	i;
+	int	x;
+	int	y;
+	int n;
 
-	if (!res)
-		res = ft_calloc(1, 1);
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	byte_read = 1;
-	while (byte_read > 0)
+	i = 0;
+	n = 0;
+	x = 0;
+	y = 0;
+	printf("%s", map);
+	while (map[i] != '\0')
 	{
-		byte_read = read(fd, buffer, BUFFER_SIZE);
-		if (byte_read == -1)
+		if (map[i] == '\n')
 		{
-			free(buffer);
-			if (res)
-				free(res);
-			return (NULL);
+			y++;
+			n++;
 		}
-		buffer[byte_read] = 0;
-		res = ft_free(res, buffer);
-		if (ft_strchr(buffer, '\0'))
-			break ;
+		if (n == 0)
+			x++;
+		i++;
 	}
-	free(buffer);
-	return (res);
+	printf("\nx:%d - y:%d\n", x, y);
+	handle_error_map(map, y, x);
+	return (1);
 }
 
-int	check_map(char **map, int rows, int cols)
+int	handle_error_map(char *map, int rows, int cols)
 {
 	//TODO 1 exit
 	//TODO 1 collectible
 	//TODO 1 starting position
 	//TODO rectangular
 	//TODO surrounded by walls = {row 0 and last full 1 && col 0 and last full 1}
+	//int	i;
 
+	
 
-	if (!check_wall(map, rows, cols))
+	if (!check_map(map, rows, cols))
+	{
+		ft_printf("Error\nThe map aren't a rectangle\n");
+		return (0);
+	}
+	/*if (!check_wall(map, rows, cols))
 	{
 		ft_printf("Error\nThe integrity of the wall is not respected\n");
 		return (0);
 	}
-	else if (!check_item(map, rows, cols))
+	i = check_item(map, rows, cols);
+	if (i == 1)
+	{
+		ft_printf("Error\nThere's too much exit available or too many appearance points for the player\n");
 		return (0);
+	}
+	else if (i == 2)
+	{
+		ft_printf("Error\nThere must be at least 1 collectible\n");
+		return (0);
+	}*/
 
-	//printf("%d-", rows);
-	//printf("%d\n", cols);
-
-	/*printf("\ne=%d", check[0]);
-	printf("c=%d", check[1]);
-	printf("p=%d", check[2]);
-
-
-
-	ft_putstr_fd("Error\n", 1);*/
 	return (1);
 }
 
@@ -74,48 +80,30 @@ int	check_item(char **map, int rows, int cols)
 {
 	int	x;
 	int	y;
-	int	check[3];
-	int	i;
+	int	e;
+	int	c;
 
-	i = 0;
-	while (i < 3)
-	{
-		check[i] = 0;
-		i++;
-	}
-	x = 0;
+	x = -1;
 	y = 0;
-	while (x != cols && y != rows)
+	e = 0;
+	c = 0;
+	while (x++ != cols && y != rows)
 	{
-		if (map[y][x] == 'E')
-			check[0]++;
+		if (map[y][x] == 'E' || map[y][x] == 'P')
+			e++;
 		if (map[y][x] == 'C')
-			check[1]++;
-		if (map[y][x] == 'P')
-			check[2]++;
+			c++;
 		if (x == cols - 1)
 		{
 			y++;
 			x = -1;
 		}
-		x++;
 	}
-	if (check[0] > 1 || check[0] < 1)
-	{
-		ft_printf("Error\nThere's too much exit available\n");
-		return (0);
-	}
-	if (check[1] < 1)
-	{
-		ft_printf("Error\nThere must be at least 1 collectible\n");
-		return (0);
-	}
-	if (check[2] > 1 || check[2] < 1)
-	{
-		ft_printf("Error\nToo many appearance points for the player\n");
-		return (0);
-	}
-	return (1);
+	if (e > 1 || e < 1)
+		return (1);
+	if (c < 1)
+		return (2);
+	return (0);
 }
 
 int	check_wall(char **map, int rows, int cols)
@@ -140,6 +128,35 @@ int	check_wall(char **map, int rows, int cols)
 		y++;
 	}
 	if (er > 0)
+		return (0);
+	return (1);
+}
+
+int	check_map(char *map, int rows, int cols)
+{
+	int	i;
+	int	x;
+	int	y;
+	int	l;
+
+	i = 0;
+	y = 0;
+	x = 0;
+	l = ft_strlen(map);
+	while (i != l)
+	{	
+		if (map[i] == '\n')
+		{
+			if (x != cols)
+				return (0);
+			x = 0;
+			y++;
+		}
+		else
+			x++;
+		i++;
+	}
+	if (y != rows || x != cols)
 		return (0);
 	return (1);
 }

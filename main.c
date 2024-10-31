@@ -115,7 +115,6 @@ char **convert_buffer_to_map(char *buffer, int *rows, int *cols)
 		}
 		i++;
 	}
-
 	return map;
 }
 
@@ -133,7 +132,7 @@ int	main(void)
 	if (mlx == NULL)
 		return (1);*/
 	buffer = NULL;
-	fd = open("maps/map1.ber", O_RDONLY);
+	fd = open("maps/map2.ber", O_RDONLY);
 	if (fd < 0)
 		return (1);
 	y = 0;
@@ -149,9 +148,11 @@ int	main(void)
 		i++;
 	}
 	i--;
+	if (get_map_data(buffer))
+		return (0);
 	map = convert_buffer_to_map(buffer, &rows, &cols);
     free(buffer);
-	check_map(map, rows, cols);
+	
 
 	//add_floor(mlx, y * IMG_S, (i / y) * IMG_S, map, rows, cols);
 
