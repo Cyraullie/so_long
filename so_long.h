@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/01 16:21:44 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:38:34 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,17 @@ typedef struct s_img {
 	void	*img_collectible;
 	void	*img_exit;
 	void	*img_player;
+	int		img_width;
+	int		img_height;
 }				t_img;
 
 
 // main part
 void	get_map_size(char *buffer, int *rows, int *cols);
 char	**convert_buffer_to_map(char *buffer, int rows, int cols);
-int		add_floor(void *mlx, int wh, int ww, t_map map);
+int 	add_floor(void *mlx, int wh, int ww, t_map map, t_img img);
+t_img	init_img(void *mlx);
+void	put_img(void *mlx, void *win, t_img img, t_map map);
 // map part
 int		get_map_data(char *map);
 int		handle_error_map(char *map, int rows, int cols);
