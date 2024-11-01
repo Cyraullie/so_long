@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:32 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/31 16:39:15 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:39:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_map_data(char *map)
 	int	i;
 	int	x;
 	int	y;
-	int n;
+	int	n;
 
 	i = 0;
 	n = 0;
@@ -42,60 +42,54 @@ int	get_map_data(char *map)
 
 int	handle_error_map(char *map, int rows, int cols)
 {
-	//TODO 1 exit
-	//TODO 1 collectible
-	//TODO 1 starting position
-	//TODO rectangular
-	//TODO surrounded by walls = {row 0 and last full 1 && col 0 and last full 1}
-	//int	i;
+	int	e;
+	int	p;
+	int	c;
 
+	e = 0;
+	p = 0;
+	c = 0;
 	if (!check_map(map, rows, cols))
 		return (print_error("Error\nThe map aren't a rectangle\n", 0));
 	if (!check_wall(map, rows, cols))
-		return (print_error("Error\nThe integrity of the wall is not respected\n", 0));
-	/*i = check_item(map, rows, cols);
-	if (i == 1)
-	{
-		ft_printf("Error\nThere's too much exit available or too many appearance points for the player\n");
-		return (0);
-	}
-	else if (i == 2)
-	{
-		ft_printf("Error\nThere must be at least 1 collectible\n");
-		return (0);
-	}*/
-
+		return (print_error("Error\nThe integrity of wall isn't respected\n", 0));
+	check_item(map, &e, &c, &p);
+	if (p != 1)
+		return (print_error("Error\nToo many spawn points for the player\n", 0));
+	if (e != 1)
+		return (print_error("Error\nThere's too much exit available\n", 0));
+	if (c < 1)
+		return (print_error("Error\nThere must be at least 1 collectible\n", 0));
 	return (1);
 }
 
-int	check_item(char **map, int rows, int cols)
+int	check_item(char *map, int *e, int *c, int *p)
 {
-	int	x;
-	int	y;
-	int	e;
-	int	c;
+	int	i;
+	int	e_t;
+	int	p_t;
+	int	c_t;
 
-	x = -1;
-	y = 0;
-	e = 0;
-	c = 0;
-	while (x++ != cols && y != rows)
+	e_t = 0;
+	p_t = 0;
+	c_t = 0;
+	i = 0;
+	while (i != (int)ft_strlen(map))
 	{
-		if (map[y][x] == 'E' || map[y][x] == 'P')
-			e++;
-		if (map[y][x] == 'C')
-			c++;
-		if (x == cols - 1)
-		{
-			y++;
-			x = -1;
-		}
+		if (map[i] == 'E')
+			e_t++;
+		if (map[i] == 'C')
+			c_t++;
+		if (map[i] == 'P')
+			p_t++;
+		i++;
 	}
-	if (e > 1 || e < 1)
-		return (1);
-	if (c < 1)
-		return (2);
-	return (0);
+	*e = e_t;
+	*c = c_t;
+	*p = p_t;
+	if (*e != 1 || *p != 1 || *c < 1)
+		return (0);
+	return (1);
 }
 
 int	check_wall(char *map, int rows, int cols)
