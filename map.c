@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:28:32 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/01 12:39:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:02:26 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	get_map_data(char *map)
 	n = 0;
 	x = 0;
 	y = 0;
-	printf("%s", map);
 	while (map[i] != '\0')
 	{
 		if (map[i] == '\n')
@@ -35,9 +34,7 @@ int	get_map_data(char *map)
 			x++;
 		i++;
 	}
-	printf("\nx:%d - y:%d\n", x, y);
-	handle_error_map(map, y, x);
-	return (1);
+	return (handle_error_map(map, y, x));
 }
 
 int	handle_error_map(char *map, int rows, int cols)
@@ -49,18 +46,18 @@ int	handle_error_map(char *map, int rows, int cols)
 	e = 0;
 	p = 0;
 	c = 0;
-	if (!check_map(map, rows, cols))
-		return (print_error("Error\nThe map aren't a rectangle\n", 0));
-	if (!check_wall(map, rows, cols))
-		return (print_error("Error\nThe integrity of wall isn't respected\n", 0));
 	check_item(map, &e, &c, &p);
-	if (p != 1)
-		return (print_error("Error\nToo many spawn points for the player\n", 0));
-	if (e != 1)
-		return (print_error("Error\nThere's too much exit available\n", 0));
-	if (c < 1)
-		return (print_error("Error\nThere must be at least 1 collectible\n", 0));
-	return (1);
+	if (!check_map(map, rows, cols))
+		return (print_error("Error\nThe map aren't a rectangle\n", 1));
+	else if (!check_wall(map, rows, cols))
+		return (print_error("Error\nThe integrity of wall isn't respected\n", 1));
+	else if (p != 1)
+		return (print_error("Error\nToo many spawn points for the player\n", 1));
+	else if (e != 1)
+		return (print_error("Error\nThere's too much exit available\n", 1));
+	else if (c < 1)
+		return (print_error("Error\nThere must be at least 1 collectible\n", 1));
+	return (0);
 }
 
 int	check_item(char *map, int *e, int *c, int *p)
@@ -129,7 +126,7 @@ int	check_map(char *map, int rows, int cols)
 	x = 0;
 	while (i != (int)ft_strlen(map))
 	{	
-		if (map[i] == '\n')
+		if (map[i] == '\n' && map[i + 1] != '\0')
 		{
 			if (x != cols)
 				return (0);
