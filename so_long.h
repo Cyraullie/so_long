@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 15:20:47 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:08:40 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_map {
 	char	**map;
 	int		rows;
 	int		cols;
+	int		nb_item;
 }				t_map;
 
 typedef struct s_img {
@@ -67,12 +68,14 @@ typedef struct s_var {
 	void	*win;
 	int		player_x;
 	int		player_y;
+	t_map	map;
 }				t_var;
 
 // main part
 int		init(t_var *var, char *file);
 void	get_map_size(char *buffer, int *rows, int *cols);
 char	**convert_buffer_to_map(char *buffer, int rows, int cols);
+int		handle_key(int keycode, t_var *var);
 //image part
 int		add_floor(t_var *var, int wh, int ww, t_map map);
 t_img	init_img(t_var *var);
@@ -91,6 +94,6 @@ char	*read_map(int fd, char *res);
 char	*open_read_map(char *file);
 // utils map
 int		print_error(char *text, int status);
-// keys part
-int		handle_key(int keycode, void *param);
+// move part
+void	move_player(t_var *var, int new_x, int new_y);
 #endif

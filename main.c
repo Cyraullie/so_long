@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//TODO opti la map dans var >:)
 #include "so_long.h"
 
 void	get_map_size(char *buffer, int *rows, int *cols)
@@ -80,30 +81,47 @@ int	init(t_var *var, char *file)
 		return (1);
 	get_map_size(buffer, &map.rows, &map.cols);
 	map.map = convert_buffer_to_map(buffer, map.rows, map.cols);
+	var->map = map;
+	var->map.map = convert_buffer_to_map(buffer, map.rows, map.cols);
 	add_floor(var, map.rows * IMG_S, map.cols * IMG_S, map);
+	free(buffer);
 	while (i < map.rows)
 		free(map.map[i++]);
 	free(map.map);
 	return (0);
 }
 
-int	handle_key(int keycode, void *param)
+int	handle_key(int keycode, t_var *var)
 {
-	(void)param;
+	int	new_x;
+	int	new_y;
+
+	new_x = var->player_x;
+	new_y = var->player_y;
 	printf("Touche pressée : %d\n", keycode);
 	if (keycode == ESC)
-	{
-		printf("Quitter le programme.\n");
 		exit(0);
-	}
 	else if (keycode == W || keycode == AA)
+	{
 		printf("up.\n");
+		new_y -= IMG_S;
+	}
 	else if (keycode == A || keycode == AL)
+	{
 		printf("left.\n");
+		new_x -= IMG_S;
+	}
 	else if (keycode == S || keycode == AD)
+	{
 		printf("down.\n");
+		new_y += IMG_S;
+	}
 	else if (keycode == D || keycode == AR)
+	{
 		printf("right.\n");
+		new_x += IMG_S;
+	}
+	move_player(var, new_x, new_y);
 	return (0);
 }
 
@@ -117,7 +135,7 @@ int	main(int argc, char **argv)
 	if (var.mlx == NULL)
 		return (0);
 	init(&var, argv[1]);
-	mlx_hook(var.win, 2, 1L << 0, handle_key, NULL);
+	mlx_hook(var.win, 2, 1L << 0, handle_key, &var);
 	mlx_loop(var.mlx);
 	return (0);
 }
