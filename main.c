@@ -67,7 +67,7 @@ char	**convert_buffer_to_map(char *buffer, int rows, int cols)
 	return (map);
 }
 
-int	init(t_var var, char *file)
+int	init(t_var *var, char *file)
 {
 	t_map	map;
 	char	*buffer;
@@ -87,6 +87,26 @@ int	init(t_var var, char *file)
 	return (0);
 }
 
+int	handle_key(int keycode, void *param)
+{
+	(void)param;
+	printf("Touche pressée : %d\n", keycode);
+	if (keycode == ESC)
+	{
+		printf("Quitter le programme.\n");
+		exit(0);
+	}
+	else if (keycode == W || keycode == AA)
+		printf("up.\n");
+	else if (keycode == A || keycode == AL)
+		printf("left.\n");
+	else if (keycode == S || keycode == AD)
+		printf("down.\n");
+	else if (keycode == D || keycode == AR)
+		printf("right.\n");
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_var	var;
@@ -96,7 +116,8 @@ int	main(int argc, char **argv)
 	var.mlx = mlx_init();
 	if (var.mlx == NULL)
 		return (0);
-	init(var, argv[1]);
+	init(&var, argv[1]);
+	mlx_hook(var.win, 2, 1L << 0, handle_key, NULL);
 	mlx_loop(var.mlx);
 	return (0);
 }
