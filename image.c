@@ -6,13 +6,13 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 16:06:40 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:28:42 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	add_floor(t_var *var, int wh, int ww, t_map map)
+int	add_floor(t_var *var, int wh, int ww)
 {
 	t_img	img;
 
@@ -30,7 +30,7 @@ int	add_floor(t_var *var, int wh, int ww, t_map map)
 	var->win = mlx_new_window(var->mlx, ww, wh, "so_long");
 	if (!var->win)
 		return (1);
-	put_img(var, img, map);
+	put_img(var, img, var->map);
 	return (0);
 }
 
@@ -100,7 +100,7 @@ void	*load_image(void *mlx_ptr, char *file_path, int *width, int *height)
 	image = mlx_xpm_file_to_image(mlx_ptr, file_path, width, height);
 	if (image == NULL)
 	{
-		printf("Error\n Failed to load image %s\n", file_path);
+		ft_printf("Error\n Failed to load image %s\n", file_path);
 	}
 	return (image);
 }

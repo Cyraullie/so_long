@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO opti la map dans var >:)
 #include "so_long.h"
 
 void	get_map_size(char *buffer, int *rows, int *cols)
@@ -80,11 +79,11 @@ int	init(t_var *var, char *file)
 	if (get_map_data(buffer))
 		return (1);
 	get_map_size(buffer, &map.rows, &map.cols);
+	count_items(buffer, &map.nb_item);
 	map.map = convert_buffer_to_map(buffer, map.rows, map.cols);
 	var->map = map;
 	var->map.map = convert_buffer_to_map(buffer, map.rows, map.cols);
-	add_floor(var, map.rows * IMG_S, map.cols * IMG_S, map);
-	free(buffer);
+	add_floor(var, map.rows * IMG_S, map.cols * IMG_S);
 	while (i < map.rows)
 		free(map.map[i++]);
 	free(map.map);
@@ -98,29 +97,16 @@ int	handle_key(int keycode, t_var *var)
 
 	new_x = var->player_x;
 	new_y = var->player_y;
-	printf("Touche pressée : %d\n", keycode);
 	if (keycode == ESC)
 		exit(0);
 	else if (keycode == W || keycode == AA)
-	{
-		printf("up.\n");
 		new_y -= IMG_S;
-	}
 	else if (keycode == A || keycode == AL)
-	{
-		printf("left.\n");
 		new_x -= IMG_S;
-	}
 	else if (keycode == S || keycode == AD)
-	{
-		printf("down.\n");
 		new_y += IMG_S;
-	}
 	else if (keycode == D || keycode == AR)
-	{
-		printf("right.\n");
 		new_x += IMG_S;
-	}
 	move_player(var, new_x, new_y);
 	return (0);
 }

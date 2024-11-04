@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/01 16:13:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:25:52 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*open_read_map(char *file)
 	int		fd;
 
 	fd = open(file, O_RDONLY);
-	printf("%d", fd);
 	if (fd < 0)
 		return (NULL);
 	buffer = NULL;
