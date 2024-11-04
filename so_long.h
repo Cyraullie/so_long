@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 16:28:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:36:12 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_var {
 	int		player_x;
 	int		player_y;
 	t_map	map;
+	int		nb_move;
 }				t_var;
 
 // main part

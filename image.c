@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 16:28:42 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:44:43 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ void	put_img(t_var *v, t_img i, t_map map)
 {
 	int		x;
 	int		y;
+	char	*move;
 	void	*c;
 
 	c = NULL;
 	y = 0;
 	x = 0;
+	move = ft_itoa(v->nb_move);
 	while (y < map.rows)
 	{
 		while (x < map.cols)
@@ -75,6 +77,7 @@ void	put_img(t_var *v, t_img i, t_map map)
 		y++;
 		x = 0;
 	}
+	mlx_string_put(v->mlx, v->win, 15, 15, 0xFFFFFF, move);
 }
 
 t_img	init_img(t_var *var)
