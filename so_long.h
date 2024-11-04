@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 14:09:16 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:29:36 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,19 @@ typedef struct s_img {
 	int		ih;
 }				t_img;
 
+typedef struct s_var {
+	void	*mlx;
+	void	*win;
+}				t_var;
+
 // main part
-int		init(void *mlx, char *file);
+int		init(t_var var, char *file);
 void	get_map_size(char *buffer, int *rows, int *cols);
 char	**convert_buffer_to_map(char *buffer, int rows, int cols);
 //image part
-int		add_floor(void *mlx, int wh, int ww, t_map map);
-t_img	init_img(void *mlx);
-void	put_img(void *mlx, void *win, t_img img, t_map map);
+int		add_floor(t_var var, int wh, int ww, t_map map);
+t_img	init_img(t_var var);
+void	put_img(t_var v, t_img i, t_map map);
 void	*load_image(void *mlx_ptr, char *file_path, int *width, int *height);
 void	*choose_image(char c, t_img img);
 // map part

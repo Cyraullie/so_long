@@ -6,32 +6,31 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 13:11:01 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:29:44 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	add_floor(void *mlx, int wh, int ww, t_map map)
+int	add_floor(t_var var, int wh, int ww, t_map map)
 {
-	void	*win;
 	t_img	img;
 
-	img = init_img(mlx);
+	img = init_img(var);
 	if (!img.img_wall || !img.img_floor || !img.img_collectible
 		|| !img.img_exit || !img.img_player)
 	{
-		mlx_destroy_image(mlx, img.img_wall);
-		mlx_destroy_image(mlx, img.img_floor);
-		mlx_destroy_image(mlx, img.img_collectible);
-		mlx_destroy_image(mlx, img.img_exit);
-		mlx_destroy_image(mlx, img.img_player);
+		mlx_destroy_image(var.mlx, img.img_wall);
+		mlx_destroy_image(var.mlx, img.img_floor);
+		mlx_destroy_image(var.mlx, img.img_collectible);
+		mlx_destroy_image(var.mlx, img.img_exit);
+		mlx_destroy_image(var.mlx, img.img_player);
 		return (1);
 	}
-	win = mlx_new_window(mlx, ww, wh, "so_long");
-	if (!win)
+	var.win = mlx_new_window(var.mlx, ww, wh, "so_long");
+	if (!var.win)
 		return (1);
-	put_img(mlx, win, img, map);
+	put_img(var, img, map);
 	return (0);
 }
 
@@ -50,22 +49,22 @@ void	*choose_image(char c, t_img img)
 	return (NULL);
 }
 
-void	put_img(void *mlx, void *win, t_img img, t_map map)
+void	put_img(t_var v, t_img i, t_map map)
 {
 	int		x;
 	int		y;
-	void	*cur;
+	void	*c;
 
-	cur = NULL;
+	c = NULL;
 	y = 0;
 	x = 0;
 	while (y < map.rows)
 	{
 		while (x < map.cols)
 		{
-			cur = choose_image(map.map[y][x], img);
-			if (cur)
-				mlx_put_image_to_window(mlx, win, cur, x * img.iw, y * img.ih);
+			c = choose_image(map.map[y][x], i);
+			if (c)
+				mlx_put_image_to_window(v.mlx, v.win, c, x * i.iw, y * i.ih);
 			x++;
 		}
 		y++;
@@ -73,17 +72,17 @@ void	put_img(void *mlx, void *win, t_img img, t_map map)
 	}
 }
 
-t_img	init_img(void *mlx)
+t_img	init_img(t_var var)
 {
 	t_img	data;
 	int		iw;
 	int		ih;
 
-	data.img_wall = load_image(mlx, "textures/wall.xpm", &iw, &ih);
-	data.img_floor = load_image(mlx, "textures/floor.xpm", &iw, &ih);
-	data.img_collectible = load_image(mlx, "textures/item.xpm", &iw, &ih);
-	data.img_exit = load_image(mlx, "textures/exit_close.xpm", &iw, &ih);
-	data.img_player = load_image(mlx, "textures/player.xpm", &iw, &ih);
+	data.img_wall = load_image(var.mlx, "textures/wall.xpm", &iw, &ih);
+	data.img_floor = load_image(var.mlx, "textures/floor.xpm", &iw, &ih);
+	data.img_collectible = load_image(var.mlx, "textures/item.xpm", &iw, &ih);
+	data.img_exit = load_image(var.mlx, "textures/exit_close.xpm", &iw, &ih);
+	data.img_player = load_image(var.mlx, "textures/player.xpm", &iw, &ih);
 	data.iw = iw;
 	data.ih = ih;
 	return (data);

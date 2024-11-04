@@ -67,7 +67,7 @@ char	**convert_buffer_to_map(char *buffer, int rows, int cols)
 	return (map);
 }
 
-int	init(void *mlx, char *file)
+int	init(t_var var, char *file)
 {
 	t_map	map;
 	char	*buffer;
@@ -80,7 +80,7 @@ int	init(void *mlx, char *file)
 		return (1);
 	get_map_size(buffer, &map.rows, &map.cols);
 	map.map = convert_buffer_to_map(buffer, map.rows, map.cols);
-	add_floor(mlx, map.rows * IMG_S, map.cols * IMG_S, map);
+	add_floor(var, map.rows * IMG_S, map.cols * IMG_S, map);
 	while (i < map.rows)
 		free(map.map[i++]);
 	free(map.map);
@@ -89,14 +89,14 @@ int	init(void *mlx, char *file)
 
 int	main(int argc, char **argv)
 {
-	void	*mlx;
+	t_var	var;
 
 	if (argc != 2)
 		return (print_error("Error\nMissing map file\n", 1));
-	mlx = mlx_init();
-	if (mlx == NULL)
+	var.mlx = mlx_init();
+	if (var.mlx == NULL)
 		return (0);
-	init(mlx, argv[1]);
-	mlx_loop(mlx);
+	init(var, argv[1]);
+	mlx_loop(var.mlx);
 	return (0);
 }
