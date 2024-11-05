@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 14:04:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:52:35 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ typedef struct s_check {
 // main part
 int		init(t_var *var, char *file);
 void	get_map_size(char *buffer, int *rows, int *cols);
-char	**convert_buffer_to_map(char *buffer, int rows, int cols);
 int		handle_key(int keycode, t_var *var);
+int		close_window(t_var *var);
 //image part
 int		add_floor(t_var *var, int wh, int ww);
 t_img	init_img(t_var *var);
@@ -105,6 +105,7 @@ char	*open_read_map(char *file);
 int		print_error(char *text, int status);
 void	count_items(char *buffer, int *nb_items);
 void	fuck_norminette(t_var *var, t_img img, int x, int y);
+char	**convert_buffer_to_map(char *buffer, int rows, int cols);
 // move part
 void	move_player(t_var *var, int new_x, int new_y);
 // algo part

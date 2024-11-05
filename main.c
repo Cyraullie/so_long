@@ -38,35 +38,6 @@ void	get_map_size(char *buffer, int *rows, int *cols)
 	*cols = x;
 }
 
-char	**convert_buffer_to_map(char *buffer, int rows, int cols)
-{
-	int		row;
-	int		col;
-	int		i;
-	char	**map;
-	int		j;
-
-	j = 0;
-	i = 0;
-	col = 0;
-	row = 0;
-	map = malloc(sizeof(char *) * rows);
-	while (j < rows)
-		map[j++] = malloc(sizeof(char) * (cols + 1));
-	while (buffer[i])
-	{
-		if (buffer[i] == '\n')
-		{
-			map[row++][col] = '\0';
-			col = 0;
-		}
-		else
-			map[row][col++] = buffer[i];
-		i++;
-	}
-	return (map);
-}
-
 int	init(t_var *var, char *file)
 {
 	t_map	map;
@@ -111,6 +82,14 @@ int	handle_key(int keycode, t_var *var)
 	return (0);
 }
 
+int	close_window(t_var *var)
+{
+	if (var->win)
+		mlx_destroy_window(var->mlx, var->win);
+	exit(0);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_var	var;
@@ -127,6 +106,7 @@ int	main(int argc, char **argv)
 	var.nb_coin = 0;
 	ft_printf("number of movement : %d\n", var.nb_move);
 	mlx_hook(var.win, 2, 1L << 0, handle_key, &var);
+	mlx_hook(var.win, 17, 0L, close_window, &var);
 	mlx_loop(var.mlx);
 	return (0);
 }
