@@ -28,7 +28,12 @@ int	init(t_var *var, char *file)
 	map.map = convert_buffer_to_map(buffer, map.rows, map.cols);
 	var->map = map;
 	var->map.map = convert_buffer_to_map(buffer, map.rows, map.cols);
-	add_floor(var, map.rows * IMG_S, map.cols * IMG_S);
+	var->nb_coin = 0;
+	if (add_floor(var, map.rows * IMG_S, map.cols * IMG_S) != 0)
+	{
+		free(buffer);
+		return (1);
+	}
 	while (i < map.rows)
 		free(map.map[i++]);
 	free(map.map);
@@ -68,7 +73,17 @@ int	close_window(t_var *var)
 
 int	animate_game(t_var *var)
 {
-	animate_collectibles(var, var->img, var->map);
+	int	delay_limit;
+
+	delay_limit = 900;
+	if (var->frame_delay >= delay_limit)
+	{
+		animate_collectibles(var, var->img, var->map);
+		var->anim_frame++;
+		var->frame_delay = 0;
+	}
+	else
+		var->frame_delay++;
 	return (0);
 }
 
@@ -86,7 +101,8 @@ int	main(int argc, char **argv)
 	if (!is_map_solvable(&var))
 		return (print_error("Error\nThe map is not solvable\n", 1));
 	var.nb_move = 0;
-	var.nb_coin = 0;
+	var.anim_frame = 0;
+	var.frame_delay = 0;
 	ft_printf("number of movement : %d\n", var.nb_move);
 	mlx_hook(var.win, 2, 1L << 0, handle_key, &var);
 	mlx_hook(var.win, 17, 0L, close_window, &var);

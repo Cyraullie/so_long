@@ -6,28 +6,34 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:38:56 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 15:31:52 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:35:57 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	mark_position(char **map, int x, int y, t_check *check)
+void	mark_position(t_var *var, int x, int y, t_check *check)
 {
-	if (map[y][x] == 'C')
+	if (var->tmp_map[y][x] == 'C')
 		check->collectibles_found++;
-	if (map[y][x] == 'E')
+	if (var->tmp_map[y][x] == 'E'
+		&& check->collectibles_found < var->map.nb_item)
+		return ;
+	if (var->tmp_map[y][x] == 'E')
 		check->exit_found = 1;
-	map[y][x] = 'V';
+	var->tmp_map[y][x] = 'V';
 }
 
 void	explore_direction(int x, int y, t_var *var, t_check *check)
 {
 	if (x < 0 || x >= var->map.cols || y < 0 || y >= var->map.rows)
 		return ;
-	if (var->tmp_map[y][x] == '1' || var->tmp_map[y][x] == 'V')
+	if (var->tmp_map[y][x] == '1'
+		|| (var->tmp_map[y][x] == 'E'
+		&& check->collectibles_found < var->map.nb_item)
+		|| var->tmp_map[y][x] == 'V')
 		return ;
-	mark_position(var->tmp_map, x, y, check);
+	mark_position(var, x, y, check);
 	explore_direction(x + 1, y, var, check);
 	explore_direction(x - 1, y, var, check);
 	explore_direction(x, y + 1, var, check);

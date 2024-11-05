@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 15:21:02 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:43:01 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	add_floor(t_var *var, int wh, int ww)
 	int		i;
 
 	img = init_img(var);
-	if (!img.img_wall || !img.img_floor || !img.img_collectible[1]
+	if (!img.img_wall || !img.img_floor
+		|| !img.img_collectible[var->anim_frame % 11]
 		|| !img.img_exit_c || !img.img_exit_o || !img.img_player)
 	{
 		mlx_destroy_image(var->mlx, img.img_wall);
