@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 14:52:35 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:17:43 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_map {
 typedef struct s_img {
 	void	*img_wall;
 	void	*img_floor;
-	void	*img_collectible;
+	void	*img_collectible[11];
 	void	*img_exit_c;
 	void	*img_exit_o;
 	void	*img_player;
@@ -70,9 +70,11 @@ typedef struct s_var {
 	int		player_x;
 	int		player_y;
 	t_map	map;
+	t_img	img;
 	char	**tmp_map;
 	int		nb_move;
 	int		nb_coin;
+	int		anim_frame;
 }				t_var;
 
 typedef struct s_check {
@@ -113,4 +115,7 @@ int		is_map_solvable(t_var *var);
 char	**copy_map(char **original_map, int rows);
 void	explore_direction(int x, int y, t_var *var, t_check *check);
 void	mark_position(char **map, int x, int y, t_check *check);
+// anime part
+void	insert_coin_frame(t_img *data, t_var *var, int *iw, int *ih);
+void	animate_collectibles(t_var *v, t_img img, t_map map);
 #endif

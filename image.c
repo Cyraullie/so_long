@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 14:13:04 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:21:02 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,23 @@
 int	add_floor(t_var *var, int wh, int ww)
 {
 	t_img	img;
+	int		i;
 
 	img = init_img(var);
-	if (!img.img_wall || !img.img_floor || !img.img_collectible
+	if (!img.img_wall || !img.img_floor || !img.img_collectible[1]
 		|| !img.img_exit_c || !img.img_exit_o || !img.img_player)
 	{
 		mlx_destroy_image(var->mlx, img.img_wall);
 		mlx_destroy_image(var->mlx, img.img_floor);
-		mlx_destroy_image(var->mlx, img.img_collectible);
+		i = 0;
+		while (i < 11)
+			mlx_destroy_image(var->mlx, img.img_collectible[i++]);
 		mlx_destroy_image(var->mlx, img.img_exit_c);
 		mlx_destroy_image(var->mlx, img.img_exit_o);
 		mlx_destroy_image(var->mlx, img.img_player);
 		return (1);
 	}
+	var->img = img;
 	var->win = mlx_new_window(var->mlx, ww, wh, "so_long");
 	if (!var->win)
 		return (1);
@@ -42,7 +46,7 @@ void	*choose_image(char c, t_img img, t_var *var)
 	else if (c == '0')
 		return (img.img_floor);
 	else if (c == 'C')
-		return (img.img_collectible);
+		return (img.img_collectible[var->anim_frame % 11]);
 	else if (c == 'E')
 	{
 		if (var->map.nb_item == var->nb_coin)
@@ -87,7 +91,7 @@ t_img	init_img(t_var *var)
 
 	data.img_wall = load_image(var->mlx, "textures/wall.xpm", &iw, &ih);
 	data.img_floor = load_image(var->mlx, "textures/floor.xpm", &iw, &ih);
-	data.img_collectible = load_image(var->mlx, "textures/coin1.xpm", &iw, &ih);
+	insert_coin_frame(&data, var, &iw, &ih);
 	data.img_exit_c = load_image(var->mlx, "textures/exit_close.xpm", &iw, &ih);
 	data.img_exit_o = load_image(var->mlx, "textures/exit_open.xpm", &iw, &ih);
 	data.img_player = load_image(var->mlx, "textures/player.xpm", &iw, &ih);

@@ -12,32 +12,6 @@
 
 #include "so_long.h"
 
-void	get_map_size(char *buffer, int *rows, int *cols)
-{
-	int	x;
-	int	y;
-	int	i;
-	int	n;
-
-	x = 0;
-	y = 1;
-	i = 0;
-	n = 0;
-	while (buffer[i] != '\0')
-	{
-		if (buffer[i] == '\n')
-		{
-			y++;
-			n++;
-		}
-		if (n == 0)
-			x++;
-		i++;
-	}
-	*rows = y;
-	*cols = x;
-}
-
 int	init(t_var *var, char *file)
 {
 	t_map	map;
@@ -86,7 +60,15 @@ int	close_window(t_var *var)
 {
 	if (var->win)
 		mlx_destroy_window(var->mlx, var->win);
+	if (var->map.map)
+		free(var->map.map);
 	exit(0);
+	return (0);
+}
+
+int	animate_game(t_var *var)
+{
+	animate_collectibles(var, var->img, var->map);
 	return (0);
 }
 
@@ -100,13 +82,15 @@ int	main(int argc, char **argv)
 	var.mlx = mlx_init();
 	if (var.mlx == NULL)
 		return (0);
-	if (init(&var, argv[1]) || !is_map_solvable(&var))
+	init(&var, argv[1]);
+	if (!is_map_solvable(&var))
 		return (print_error("Error\nThe map is not solvable\n", 1));
 	var.nb_move = 0;
 	var.nb_coin = 0;
 	ft_printf("number of movement : %d\n", var.nb_move);
 	mlx_hook(var.win, 2, 1L << 0, handle_key, &var);
 	mlx_hook(var.win, 17, 0L, close_window, &var);
+	mlx_loop_hook(var.mlx, animate_game, &var);
 	mlx_loop(var.mlx);
 	return (0);
 }

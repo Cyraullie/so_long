@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:12:15 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 14:51:45 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:32:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,30 @@ char	**convert_buffer_to_map(char *buffer, int rows, int cols)
 		i++;
 	}
 	return (map);
+}
+
+void	get_map_size(char *buffer, int *rows, int *cols)
+{
+	int	x;
+	int	y;
+	int	i;
+	int	n;
+
+	x = 0;
+	y = 1;
+	i = 0;
+	n = 0;
+	while (buffer[i] != '\0')
+	{
+		if (buffer[i] == '\n')
+		{
+			y++;
+			n++;
+		}
+		if (n == 0)
+			x++;
+		i++;
+	}
+	*rows = y;
+	*cols = x;
 }
