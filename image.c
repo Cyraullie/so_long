@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 16:44:43 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 10:14:12 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*choose_image(char c, t_img img)
 	return (NULL);
 }
 
-void	put_img(t_var *v, t_img i, t_map map)
+void	put_img(t_var *var, t_img img, t_map map)
 {
 	int		x;
 	int		y;
@@ -59,25 +59,18 @@ void	put_img(t_var *v, t_img i, t_map map)
 	c = NULL;
 	y = 0;
 	x = 0;
-	move = ft_itoa(v->nb_move);
 	while (y < map.rows)
 	{
 		while (x < map.cols)
 		{
-			c = choose_image(map.map[y][x], i);
-			if (c)
-				mlx_put_image_to_window(v->mlx, v->win, c, x * i.iw, y * i.ih);
-			if (map.map[y][x] == 'P')
-			{
-				v->player_x = x * i.iw;
-				v->player_y = y * i.ih;
-			}
+			fuck_norminette(var, img, x, y);
 			x++;
 		}
 		y++;
 		x = 0;
 	}
-	mlx_string_put(v->mlx, v->win, 15, 15, 0xFFFFFF, move);
+	move = ft_itoa(var->nb_move);
+	mlx_string_put(var->mlx, var->win, 15, 15, 0xFFFFFF, move);
 }
 
 t_img	init_img(t_var *var)
@@ -88,7 +81,7 @@ t_img	init_img(t_var *var)
 
 	data.img_wall = load_image(var->mlx, "textures/wall.xpm", &iw, &ih);
 	data.img_floor = load_image(var->mlx, "textures/floor.xpm", &iw, &ih);
-	data.img_collectible = load_image(var->mlx, "textures/item.xpm", &iw, &ih);
+	data.img_collectible = load_image(var->mlx, "textures/coin1.xpm", &iw, &ih);
 	data.img_exit = load_image(var->mlx, "textures/exit_close.xpm", &iw, &ih);
 	data.img_player = load_image(var->mlx, "textures/player.xpm", &iw, &ih);
 	data.iw = iw;

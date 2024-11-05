@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/04 16:36:12 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 10:10:53 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	*open_read_map(char *file);
 // utils map
 int		print_error(char *text, int status);
 void	count_items(char *buffer, int *nb_items);
+void	fuck_norminette(t_var *var, t_img img, int x, int y);
 // move part
 void	move_player(t_var *var, int new_x, int new_y);
 #endif

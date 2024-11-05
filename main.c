@@ -114,7 +114,7 @@ int	handle_key(int keycode, t_var *var)
 int	main(int argc, char **argv)
 {
 	t_var	var;
-	
+
 	if (argc != 2)
 		return (print_error("Error\nMissing map file\n", 1));
 	var.mlx = mlx_init();
