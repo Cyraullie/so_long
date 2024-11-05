@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 10:48:04 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:04:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,15 @@ typedef struct s_var {
 	int		player_x;
 	int		player_y;
 	t_map	map;
+	char	**tmp_map;
 	int		nb_move;
 	int		nb_coin;
 }				t_var;
+
+typedef struct s_check {
+	int	collectibles_found;
+	int	exit_found;
+}				t_check;
 
 // main part
 int		init(t_var *var, char *file);
@@ -101,4 +107,9 @@ void	count_items(char *buffer, int *nb_items);
 void	fuck_norminette(t_var *var, t_img img, int x, int y);
 // move part
 void	move_player(t_var *var, int new_x, int new_y);
+// algo part
+int		is_map_solvable(t_var *var);
+char	**copy_map(char **original_map, int rows);
+void	explore_direction(int x, int y, t_var *var, t_check *check);
+void	mark_position(char **map, int x, int y, t_check *check);
 #endif

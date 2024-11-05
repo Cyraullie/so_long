@@ -115,14 +115,17 @@ int	main(int argc, char **argv)
 {
 	t_var	var;
 
+	ft_bzero(&var, sizeof(var));
 	if (argc != 2)
 		return (print_error("Error\nMissing map file\n", 1));
 	var.mlx = mlx_init();
 	if (var.mlx == NULL)
 		return (0);
+	if (init(&var, argv[1]) || !is_map_solvable(&var))
+		return (print_error("Error\nThe map is not solvable\n", 1));
 	var.nb_move = 0;
 	var.nb_coin = 0;
-	init(&var, argv[1]);
+	ft_printf("number of movement : %d\n", var.nb_move);
 	mlx_hook(var.win, 2, 1L << 0, handle_key, &var);
 	mlx_loop(var.mlx);
 	return (0);
