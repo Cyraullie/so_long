@@ -121,6 +121,7 @@ int	main(int argc, char **argv)
 	if (var.mlx == NULL)
 		return (0);
 	var.nb_move = 0;
+	var.nb_coin = 0;
 	init(&var, argv[1]);
 	mlx_hook(var.win, 2, 1L << 0, handle_key, &var);
 	mlx_loop(var.mlx);

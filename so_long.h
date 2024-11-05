@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 10:10:53 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 10:48:04 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef struct s_img {
 	void	*img_wall;
 	void	*img_floor;
 	void	*img_collectible;
-	void	*img_exit;
+	void	*img_exit_c;
+	void	*img_exit_o;
 	void	*img_player;
 	int		iw;
 	int		ih;
@@ -70,6 +71,7 @@ typedef struct s_var {
 	int		player_y;
 	t_map	map;
 	int		nb_move;
+	int		nb_coin;
 }				t_var;
 
 // main part
@@ -82,7 +84,7 @@ int		add_floor(t_var *var, int wh, int ww);
 t_img	init_img(t_var *var);
 void	put_img(t_var *v, t_img i, t_map map);
 void	*load_image(void *mlx_ptr, char *file_path, int *width, int *height);
-void	*choose_image(char c, t_img img);
+void	*choose_image(char c, t_img img, t_var *var);
 // map part
 int		get_map_data(char *map);
 int		handle_error_map(char *map, int rows, int cols);
