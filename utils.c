@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:12:15 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 09:51:11 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 10:50:28 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	fuck_norminette(t_var *var, t_img img, int x, int y)
 	void	*c;
 
 	c = NULL;
-	c = choose_image(var->map.map[y][x], img);
+	c = choose_image(var->map.map[y][x], img, var);
 	if (c)
 		mlx_put_image_to_window(var->mlx, var->win, c, x * img.iw, y * img.ih);
 	if (var->map.map[y][x] == 'P')
