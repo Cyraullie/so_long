@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 10:14:12 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/05 10:49:41 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ int	add_floor(t_var *var, int wh, int ww)
 
 	img = init_img(var);
 	if (!img.img_wall || !img.img_floor || !img.img_collectible
-		|| !img.img_exit || !img.img_player)
+		|| !img.img_exit_c || !img.img_exit_o || !img.img_player)
 	{
 		mlx_destroy_image(var->mlx, img.img_wall);
 		mlx_destroy_image(var->mlx, img.img_floor);
 		mlx_destroy_image(var->mlx, img.img_collectible);
-		mlx_destroy_image(var->mlx, img.img_exit);
+		mlx_destroy_image(var->mlx, img.img_exit_c);
+		mlx_destroy_image(var->mlx, img.img_exit_o);
 		mlx_destroy_image(var->mlx, img.img_player);
 		return (1);
 	}
@@ -34,7 +35,7 @@ int	add_floor(t_var *var, int wh, int ww)
 	return (0);
 }
 
-void	*choose_image(char c, t_img img)
+void	*choose_image(char c, t_img img, t_var *var)
 {
 	if (c == '1')
 		return (img.img_wall);
@@ -43,7 +44,12 @@ void	*choose_image(char c, t_img img)
 	else if (c == 'C')
 		return (img.img_collectible);
 	else if (c == 'E')
-		return (img.img_exit);
+	{
+		if (var->map.nb_item == var->nb_coin)
+			return (img.img_exit_o);
+		else
+			return (img.img_exit_c);
+	}
 	else if (c == 'P')
 		return (img.img_player);
 	return (NULL);
@@ -82,7 +88,8 @@ t_img	init_img(t_var *var)
 	data.img_wall = load_image(var->mlx, "textures/wall.xpm", &iw, &ih);
 	data.img_floor = load_image(var->mlx, "textures/floor.xpm", &iw, &ih);
 	data.img_collectible = load_image(var->mlx, "textures/coin1.xpm", &iw, &ih);
-	data.img_exit = load_image(var->mlx, "textures/exit_close.xpm", &iw, &ih);
+	data.img_exit_c = load_image(var->mlx, "textures/exit_close.xpm", &iw, &ih);
+	data.img_exit_o = load_image(var->mlx, "textures/exit_open.xpm", &iw, &ih);
 	data.img_player = load_image(var->mlx, "textures/player.xpm", &iw, &ih);
 	data.iw = iw;
 	data.ih = ih;
