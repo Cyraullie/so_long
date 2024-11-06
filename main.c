@@ -52,11 +52,17 @@ int	handle_key(int keycode, t_var *var)
 	else if (keycode == W || keycode == AA)
 		new_y -= IMG_S;
 	else if (keycode == A || keycode == AL)
+	{
 		new_x -= IMG_S;
+		var->last_dir = -1;
+	}
 	else if (keycode == S || keycode == AD)
 		new_y += IMG_S;
 	else if (keycode == D || keycode == AR)
+	{
 		new_x += IMG_S;
+		var->last_dir = 1;
+	}
 	move_player(var, new_x, new_y);
 	return (0);
 }
@@ -79,6 +85,7 @@ int	animate_game(t_var *var)
 	if (var->frame_delay >= delay_limit)
 	{
 		animate_collectibles(var, var->img, var->map);
+		animate_player(var, var->img, var->map);
 		var->anim_frame++;
 		var->frame_delay = 0;
 	}
@@ -103,6 +110,8 @@ int	main(int argc, char **argv)
 	var.nb_move = 0;
 	var.anim_frame = 0;
 	var.frame_delay = 0;
+	var.last_dir = 1;
+	var.end = 1;
 	ft_printf("number of movement : %d\n", var.nb_move);
 	mlx_hook(var.win, 2, 1L << 0, handle_key, &var);
 	mlx_hook(var.win, 17, 0L, close_window, &var);
