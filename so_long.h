@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/06 11:41:01 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:49:59 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ typedef struct s_img {
 	void	*img_collectible[12];
 	void	*img_exit_c;
 	void	*img_exit_o;
-	void	*img_player;
+	void	*img_player[4];
+	void	*img_player_left[4];
 	void	*img_ennemy;
 	int		iw;
 	int		ih;
@@ -79,6 +80,8 @@ typedef struct s_var {
 	int		nb_coin;
 	int		anim_frame;
 	int		frame_delay;
+	int		last_dir;
+	int		end;
 }				t_var;
 
 typedef struct s_check {
@@ -88,7 +91,6 @@ typedef struct s_check {
 
 // main part
 int		init(t_var *var, char *file);
-void	get_map_size(char *buffer, int *rows, int *cols);
 int		handle_key(int keycode, t_var *var);
 int		close_window(t_var *var);
 //image part
@@ -112,6 +114,8 @@ int		print_error(char *text, int status);
 void	count_items(char *buffer, int *nb_items);
 void	fuck_norminette(t_var *var, t_img img, int x, int y);
 char	**convert_buffer_to_map(char *buffer, int rows, int cols);
+void	get_map_size(char *buffer, int *rows, int *cols);
+void	destroy_anime(t_img img, t_var *var);
 // move part
 void	move_player(t_var *var, int new_x, int new_y);
 // algo part
@@ -122,6 +126,8 @@ void	mark_position(t_var *var, int x, int y, t_check *check);
 // anime part
 void	insert_coin_frame(t_img *data, t_var *var, int *iw, int *ih);
 void	animate_collectibles(t_var *v, t_img img, t_map map);
+void	insert_player_frame(t_img *data, t_var *var, int *iw, int *ih);
+void	animate_player(t_var *v, t_img img, t_map map);
 // screen part
 void	display_end_screen(t_var *var);
 #endif

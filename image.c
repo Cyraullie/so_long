@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:48:44 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 15:43:01 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:40:21 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 int	add_floor(t_var *var, int wh, int ww)
 {
 	t_img	img;
-	int		i;
 
 	img = init_img(var);
 	if (!img.img_wall || !img.img_floor
 		|| !img.img_collectible[var->anim_frame % 11]
-		|| !img.img_exit_c || !img.img_exit_o || !img.img_player)
+		|| !img.img_exit_c || !img.img_exit_o
+		|| !img.img_player[var->anim_frame % 3]
+		|| !img.img_player_left[var->anim_frame % 3])
 	{
 		mlx_destroy_image(var->mlx, img.img_wall);
 		mlx_destroy_image(var->mlx, img.img_floor);
-		i = 0;
-		while (i < 11)
-			mlx_destroy_image(var->mlx, img.img_collectible[i++]);
+		destroy_anime(img, var);
 		mlx_destroy_image(var->mlx, img.img_exit_c);
 		mlx_destroy_image(var->mlx, img.img_exit_o);
-		mlx_destroy_image(var->mlx, img.img_player);
 		return (1);
 	}
 	var->img = img;
@@ -56,7 +54,12 @@ void	*choose_image(char c, t_img img, t_var *var)
 			return (img.img_exit_c);
 	}
 	else if (c == 'P')
-		return (img.img_player);
+	{
+		if (var->last_dir == 1)
+			return (img.img_player[var->anim_frame % 3]);
+		else
+			return (img.img_player_left[var->anim_frame % 3]);
+	}
 	return (NULL);
 }
 
@@ -95,7 +98,7 @@ t_img	init_img(t_var *var)
 	insert_coin_frame(&data, var, &iw, &ih);
 	data.img_exit_c = load_image(var->mlx, "textures/exit_close.xpm", &iw, &ih);
 	data.img_exit_o = load_image(var->mlx, "textures/exit_open.xpm", &iw, &ih);
-	data.img_player = load_image(var->mlx, "textures/player.xpm", &iw, &ih);
+	insert_player_frame(&data, var, &iw, &ih);
 	data.iw = iw;
 	data.ih = ih;
 	return (data);
