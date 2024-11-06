@@ -6,7 +6,7 @@
 #    By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 11:31:20 by cgoldens          #+#    #+#              #
-#    Updated: 2024/11/05 15:12:30 by cgoldens         ###   ########.fr        #
+#    Updated: 2024/11/06 11:40:11 by cgoldens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBFT_PATH = libft/
 
 LIBFT_LIB = $(LIBFT_PATH)libft.a
 
-SRC = main.c map.c read.c utils.c image.c move.c algorithm.c anime.c
+SRC = main.c map.c read.c utils.c image.c move.c algorithm.c anime.c screen.c
 
 OBJ = $(SRC:.c=.o)
 

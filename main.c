@@ -12,7 +12,6 @@
 
 #include "so_long.h"
 //TODO add ennemy
-//TODO add level system
 int	init(t_var *var, char *file)
 {
 	t_map	map;

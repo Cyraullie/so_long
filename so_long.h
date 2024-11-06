@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 16:31:35 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:41:01 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_img {
 	void	*img_exit_c;
 	void	*img_exit_o;
 	void	*img_player;
+	void	*img_ennemy;
 	int		iw;
 	int		ih;
 }				t_img;
@@ -69,6 +70,8 @@ typedef struct s_var {
 	void	*win;
 	int		player_x;
 	int		player_y;
+	int		ennemy_x;
+	int		ennemy_y;
 	t_map	map;
 	t_img	img;
 	char	**tmp_map;
@@ -119,4 +122,6 @@ void	mark_position(t_var *var, int x, int y, t_check *check);
 // anime part
 void	insert_coin_frame(t_img *data, t_var *var, int *iw, int *ih);
 void	animate_collectibles(t_var *v, t_img img, t_map map);
+// screen part
+void	display_end_screen(t_var *var);
 #endif

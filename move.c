@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:33:03 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/05 16:03:39 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:41:25 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	move_player(t_var *var, int new_x, int new_y)
 		var->map.map[var->player_y / IMG_S][var->player_x / IMG_S] = 'P';
 		ft_printf("number of movement : %d\n", var->nb_move);
 		put_img(var, init_img(var), var->map);
-		exit (0);
+		display_end_screen(var);
 	}
 }
