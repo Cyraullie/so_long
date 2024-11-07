@@ -49,21 +49,22 @@ int	handle_key(int keycode, t_var *var)
 	new_y = var->player_y;
 	if (keycode == ESC)
 		exit(0);
-	else if (keycode == W || keycode == AA)
+	else if ((keycode == W || keycode == AA) && var->end)
 		new_y -= IMG_S;
-	else if (keycode == A || keycode == AL)
+	else if ((keycode == A || keycode == AL) && var->end)
 	{
 		new_x -= IMG_S;
 		var->last_dir = -1;
 	}
-	else if (keycode == S || keycode == AD)
+	else if ((keycode == S || keycode == AD) && var->end)
 		new_y += IMG_S;
-	else if (keycode == D || keycode == AR)
+	else if ((keycode == D || keycode == AR) && var->end)
 	{
 		new_x += IMG_S;
 		var->last_dir = 1;
 	}
-	move_player(var, new_x, new_y);
+	if (var->end)
+		move_player(var, new_x, new_y);
 	return (0);
 }
 
