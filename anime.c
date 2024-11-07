@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:03:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/06 14:46:59 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:24:17 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	animate_player(t_var *v, t_img img, t_map map)
 {
 	int		x;
 	int		y;
-	void	*player;
 
 	y = 0;
 	while (y < map.rows)
@@ -102,19 +101,24 @@ void	animate_player(t_var *v, t_img img, t_map map)
 		while (x < map.cols)
 		{
 			if (map.map[y][x] == 'P')
-			{
-				if (v->last_dir == 1)
-					player = img.img_player[v->anim_frame % 4];
-				else
-					player = img.img_player_left[v->anim_frame % 4];
-				mlx_put_image_to_window(v->mlx, v->win, img.img_floor,
-					x * img.iw, y * img.ih);
-				mlx_put_image_to_window(v->mlx, v->win, player,
-					x * img.iw, y * img.ih);
-			}
+				display_player(v, img, x, y);
 			x++;
 		}
 		y++;
 	}
 	v->anim_frame++;
+}
+
+void	display_player(t_var *v, t_img img, int x, int y)
+{
+	void	*player;
+
+	if (v->last_dir == 1)
+		player = img.img_player[v->anim_frame % 4];
+	else
+		player = img.img_player_left[v->anim_frame % 4];
+	mlx_put_image_to_window(v->mlx, v->win, img.img_floor,
+		x * img.iw, y * img.ih);
+	mlx_put_image_to_window(v->mlx, v->win, player,
+		x * img.iw, y * img.ih);
 }

@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:26:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/11/06 14:49:59 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:23:49 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	insert_coin_frame(t_img *data, t_var *var, int *iw, int *ih);
 void	animate_collectibles(t_var *v, t_img img, t_map map);
 void	insert_player_frame(t_img *data, t_var *var, int *iw, int *ih);
 void	animate_player(t_var *v, t_img img, t_map map);
+void	display_player(t_var *v, t_img img, int x, int y);
 // screen part
 void	display_end_screen(t_var *var);
 #endif
