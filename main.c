@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-//TODO add ennemy
+
 int	init(t_var *var, char *file)
 {
 	t_map	map;
